@@ -8,7 +8,7 @@
     android:background="@color/bg_login"
     android:gravity="center"
     android:padding="10dp"
-    tools:context="androidapp.gabrielrunescape.com.br.LoginActivity">
+    tools:context="androidapp.gabrielrunescape.com.br.View.LoginActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -19,7 +19,7 @@
         android:paddingRight="20dp" >
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/etLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -32,7 +32,7 @@
             android:textColorHint="@color/input_login_hint" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/etPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -58,7 +58,7 @@
         <!-- Link to Login Screen -->
 
         <Button
-            android:id="@+id/btnLinkToRegisterScreen"
+            android:id="@+id/btnLinkToRegister"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dip"
