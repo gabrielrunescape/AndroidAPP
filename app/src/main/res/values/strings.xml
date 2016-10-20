@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AndroidAPP</string>
+
+    <!-- activity_login.xml -->
+    <string name="etLogin">Nome de usuário</string>
+    <string name="etPassword">Senha</string>
+    <string name="btn_login">Acessar</string>
+    <string name="btn_link_to_register">Ainda não é membro? Cadastrar agora.</string>
 </resources>
