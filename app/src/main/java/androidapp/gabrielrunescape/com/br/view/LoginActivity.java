@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidapp.gabrielrunescape.com.br.R;
 import android.support.v7.app.AppCompatActivity;
-import androidapp.gabrielrunescape.com.br.Controller.LoginController;
+import androidapp.gabrielrunescape.com.br.controller.LoginController;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;

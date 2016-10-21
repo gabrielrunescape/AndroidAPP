@@ -2,6 +2,9 @@ package androidapp.gabrielrunescape.com.br.model;
 
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 /**
  *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 20/10/16.
  *
@@ -18,6 +21,7 @@ import android.os.AsyncTask;
 public class ConnectionAsync extends AsyncTask<String, Void, String> {
     private String params;
     private String method;
+    private JSONArray array;
 
     /**
      *      Método contrutor para incicializar a classe assincrona. Devem ser passados os paramêtros
@@ -33,9 +37,16 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... url) {
-        Connection.request(method, params);
+        try {
+            String _return = Connection.request(method, params);
+            array = new JSONArray(_return);
 
-        return null;
+            return _return;
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+            return e.getMessage();
+        }
     }
 
     @Override

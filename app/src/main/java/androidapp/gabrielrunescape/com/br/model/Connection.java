@@ -20,12 +20,14 @@ import java.net.ProtocolException;
  */
 
 public class Connection {
-    private static String LINK = "http://192.168.180.135:3000/users";
+    private static String LINK = "http://192.168.180.135:3000/users/";
 
-    public static void request(String method, String params) {
+    public static String request(String method, String params) {
+        String _return = null;
+
         switch (method) {
             case "GET":
-                get(params);
+                _return = get(params);
                 break;
             case "POST":
                 post();
@@ -40,6 +42,8 @@ public class Connection {
 
                 break;
         }
+
+        return _return;
     }
 
     /**
@@ -48,12 +52,13 @@ public class Connection {
      *
      * @param params - Valores a serem filtratos pelo `WebService`
      */
-    private static void get(String params) {
+    private static String get(String params) {
         URL url;
+        StringBuffer response = null;
         HttpURLConnection connection = null;
 
         try {
-            url = new URL(LINK);
+            url = new URL(LINK + params);
             connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("GET");
@@ -66,16 +71,13 @@ public class Connection {
             BufferedReader input = new BufferedReader(new InputStreamReader(in));
 
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            response = new StringBuffer();
 
             while ((inputLine = input.readLine()) != null) {
                 response.append(inputLine);
             }
 
             input.close();
-
-            System.out.println(response.toString());
-
         } catch (ProtocolException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
@@ -85,6 +87,8 @@ public class Connection {
         } finally {
             connection.disconnect();
         }
+
+        return response.toString();
     }
 
     private static void post() {

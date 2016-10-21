@@ -7,13 +7,16 @@ import android.content.Context;
 import android.net.NetworkInfo;
 import android.widget.EditText;
 import android.net.ConnectivityManager;
-import androidapp.gabrielrunescape.com.br.Model.ConnectionAsync;
+import androidapp.gabrielrunescape.com.br.model.ConnectionAsync;
 
 /**
  *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 19/10/2016.
  *
  *      Classe controladora responsável por realizar o controle de todas as ações realizadas pela
  * `activity` de Login (activity_login.xml e LoginActivity.java).
+ *      Todas as operações realizadas nessa activity serão controladas por esta classe. A conexão
+ * com a internet sempre será necessária para poder prosseguir com as demais funções dentro da
+ * aplicação.
  */
 
 public class LoginController implements View.OnClickListener {
@@ -23,7 +26,7 @@ public class LoginController implements View.OnClickListener {
     private Button btnLinkToRegister;
 
     /***
-     *      Metódo construtor do controlador. Devem ser passadas as valores já instânciadas e
+     *      Método construtor do controlador. Devem ser passadas as valores já instânciadas e
      * iniciadas para que a todas as funções subsequentes sejam executadas sem problemas.
      *
      * @param btn1 - Botão de login
@@ -39,7 +42,7 @@ public class LoginController implements View.OnClickListener {
     }
 
     /***
-     *      Metódo sobrescrito para poder realizar as ações de `ClickListener`.
+     *      Método sobrescrito para poder realizar as ações de `ClickListener`.
      *
      * @param v - Não necessário quando se chama o procedimento 'setOnClickListener'
      */
@@ -47,20 +50,9 @@ public class LoginController implements View.OnClickListener {
     public void onClick(View v) {
         int idView = v.getId();
 
-        String login = etLogin.getText().toString();
-        String senha = etPassword.getText().toString();
-
         if (isConnected(v)) {
             if (v.getId() == btnLogin.getId()) {
-                if (login.isEmpty() || senha.isEmpty()) {
-                    Toast.makeText(v.getContext(), "Existem campos em branco!", Toast.LENGTH_LONG).show();
-                } else {
-                    if (login.equals(senha)) {
-                        Toast.makeText(v.getContext(), "Login iguais!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(v.getContext(), "Login diferentes!", Toast.LENGTH_LONG).show();
-                    }
-                }
+                this.logar(v);
             } else {
                 new ConnectionAsync("GET", "").execute("http://192.168.180.135:3000/users");
             }
@@ -68,7 +60,7 @@ public class LoginController implements View.OnClickListener {
     }
 
     /***
-     *      Metódo para verificar se o dispositivo está conectado à Internet
+     *      Método para verificar se o dispositivo está conectado à Internet
      *
      * @param v - Usado para capturar o contexto no qual se basea a aplicação
      * @return - verdadeiro se tem acesso à internet, senão uma mensagem avisando ao usuário
@@ -87,6 +79,23 @@ public class LoginController implements View.OnClickListener {
             toast.show();
 
             return false;
+        }
+    }
+
+    /***
+     *      Método para realizar a autenticação na aplicação. O método faz as verificações básicas
+     * para ser possível acessar a activity seguinte, após autenticação.
+     *
+     * @param v - View que será usada para saber qual é o contexto para exibir o Toast
+     */
+    private void logar(View v) {
+        String login = etLogin.getText().toString();
+        String senha = etPassword.getText().toString();
+
+        if (login.isEmpty() || senha.isEmpty()) {
+            Toast.makeText(v.getContext(), "Existem campos em branco!", Toast.LENGTH_LONG).show();
+        } else {
+            new ConnectionAsync("GET", login + "/" + senha).execute("http://192.168.180.135:3000/users/");
         }
     }
 }
