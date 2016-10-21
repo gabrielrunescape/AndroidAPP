@@ -1,4 +1,4 @@
-package androidapp.gabrielrunescape.com.br.Model;
+package androidapp.gabrielrunescape.com.br.model;
 
 import java.net.URL;
 import java.io.IOException;

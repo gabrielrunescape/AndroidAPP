@@ -1,4 +1,4 @@
-package androidapp.gabrielrunescape.com.br.Controller;
+package androidapp.gabrielrunescape.com.br.controller;
 
 import android.view.View;
 import android.widget.Toast;

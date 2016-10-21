@@ -1,4 +1,4 @@
-package androidapp.gabrielrunescape.com.br.Model;
+package androidapp.gabrielrunescape.com.br.model;
 
 import android.os.AsyncTask;
 
@@ -19,6 +19,13 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
     private String params;
     private String method;
 
+    /**
+     *      Método contrutor para incicializar a classe assincrona. Devem ser passados os paramêtros
+     * para passar os valores para as variáveis encapsuladas para realizar as demais funções.
+     *
+     * @param method - Protocolo de transfêrencia para solicitação
+     * @param params - Valores passados pela query
+     */
     public ConnectionAsync(String method, String params) {
         this.method = method;
         this.params = params;

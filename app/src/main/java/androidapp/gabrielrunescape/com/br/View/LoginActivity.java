@@ -1,4 +1,4 @@
-package androidapp.gabrielrunescape.com.br.View;
+package androidapp.gabrielrunescape.com.br.view;
 
 import android.os.Bundle;
 import android.view.Window;

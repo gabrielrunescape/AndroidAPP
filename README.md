@@ -18,8 +18,9 @@ As funcionalidades da aplicação na qual estão definidas até então são e po
 - [x] Utilizar recursos da linguagem Java
 - [x] Utilizar um _WebService_ próprio em NodeJS
 - [X] Desenvolver um layout próprio e diferencial
-- [ ] Integração com [REST API] (https://github.com/gabrielrunescape/WebService);
+- [X] Integração com [REST API] (https://github.com/gabrielrunescape/WebService);
 - [ ] Armazenamento em arquivos locais com _SQLite_
+- [ ] Requisição e resposta armazenada em _JSONArray_
 
 ## Instalação e contribuição
 
@@ -37,4 +38,4 @@ $ ...
 $ git push origin master
 ```
 
-Prontinho, agora só esperar com que as mudanças sejam aprovadas
+Prontinho, agora só esperar com que as mudanças sejam aprovadas.
