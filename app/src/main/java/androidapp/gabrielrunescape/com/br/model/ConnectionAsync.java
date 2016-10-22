@@ -1,13 +1,11 @@
 package androidapp.gabrielrunescape.com.br.model;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.view.View;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+import android.widget.Toast;
+import android.os.AsyncTask;
+import org.json.JSONException;
+import android.content.Context;
 
 /**
  *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 20/10/16.
@@ -25,7 +23,6 @@ import org.json.JSONObject;
 public class ConnectionAsync extends AsyncTask<String, Void, String> {
     private String params;
     private String method;
-    private JSONArray array;
     private Context context;
 
     /**
@@ -52,15 +49,23 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         try {
             JSONObject object = new JSONObject(result);
-            String msg = object.getString("response");
-            
-            if (!msg.isEmpty() || !msg.equals(null)) {
-                Toast.makeText(context, object.getString("response"), Toast.LENGTH_SHORT).show();
+
+            if (object.has("response")) {
+                String msg = object.getString("response");
+
+                if (!msg.isEmpty() || !msg.equals(null)) {
+                    Toast.makeText(context, object.getString("response"), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                String id = object.getString("_id");
+                String login = object.getString("login");
+                String senha = object.getString("senha");
+                String email = object.getString("email");
+
+                Usuario usuario = new Usuario(id, login, senha, email);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        System.out.println(result);
     }
 }
