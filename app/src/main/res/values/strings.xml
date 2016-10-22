@@ -6,4 +6,9 @@
     <string name="etPassword">Senha</string>
     <string name="btn_login">Acessar</string>
     <string name="btn_link_to_register">Ainda não é membro? Cadastrar agora.</string>
+
+    <!-- activity_register.xml -->
+    <string name="etEmail">E-mail</string>
+    <string name="etPassConf">Confirme sua senha</string>
+    <string name="btn_register">Registar-se</string>
 </resources>

@@ -5,42 +5,47 @@ import android.widget.*;
 import android.content.*;
 import android.view.View;
 import android.app.Activity;
-import androidapp.gabrielrunescape.com.br.model.ConnectionAsync;
-import androidapp.gabrielrunescape.com.br.view.RegisterActivity;
+import androidapp.gabrielrunescape.com.br.view.LoginActivity;
 
 /**
- *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 19/10/2016.
+ *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 22/10/2016.
  *
  *      Classe controladora responsável por realizar o controle de todas as ações realizadas pela
- * `activity` de Login (activity_login.xml e LoginActivity.java).
+ * `activity` de Register (activity_register.xml e RegisterActivity.java).
  *      Todas as operações realizadas nessa activity serão controladas por esta classe. A conexão
  * com a internet sempre será necessária para poder prosseguir com as demais funções dentro da
  * aplicação.
  */
 
-public class LoginController implements View.OnClickListener {
-    private Button btnLogin;
+public class RegisterController implements View.OnClickListener {
     private EditText etLogin;
+    private EditText etEmail;
     private Activity activity;
+    private Button btnRegister;
     private EditText etPassword;
-    private Button btnLinkToRegister;
+    private EditText etPassConf;
+    private Button btnLinkToLogin;
 
-    /***
+    /**
      *      Método construtor do controlador. Devem ser passadas as valores já instânciadas e
      * iniciadas para que a todas as funções subsequentes sejam executadas sem problemas.
      *
-     * @param btn1 - Botão de login
-     * @param btn2 - Botão de registro
-     * @param et1 - EditText de nome de usuário
-     * @param et2 - EditText de senha
+     * @param b1 - Botão de registro
+     * @param b2 - Botão de login
+     * @param e1 - EditText de nome de usuário
+     * @param e2 - EditText de e-mail
+     * @param e3 - EditText de senha
+     * @param e4 - EditText de confirmação de senha
      * @param a - Activity de execução
      */
-    public LoginController(Button btn1, Button btn2, EditText et1, EditText et2, Activity a) {
+    public RegisterController(Button b1, Button b2, EditText e1, EditText e2, EditText e3, EditText e4, Activity a) {
+        this.etLogin = e1;
+        this.etEmail = e2;
         this.activity = a;
-        this.etLogin = et1;
-        this.btnLogin = btn1;
-        this.etPassword = et2;
-        this.btnLinkToRegister = btn2;
+        this.btnRegister = b1;
+        this.etPassword = e3;
+        this.etPassConf = e4;
+        this.btnLinkToLogin = b2;
     }
 
     /***
@@ -51,14 +56,15 @@ public class LoginController implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int idView = v.getId();
+        Context context = v.getContext();
 
         if (isConnected(v)) {
-            if (v.getId() == btnLogin.getId()) {
-                this.logar(v);
-            } else {
-                Intent intent = new Intent(activity, RegisterActivity.class);
+            if (v.getId() == btnRegister.getId()) {
 
-                activity.startActivity(intent);
+            } else {
+                Intent intent = new Intent(activity, LoginActivity.class);
+
+                context.startActivity(intent);
                 activity.finish();
             }
         }
@@ -70,7 +76,7 @@ public class LoginController implements View.OnClickListener {
      * @param v - Usado para capturar o contexto no qual se basea a aplicação
      * @return - verdadeiro se tem acesso à internet, senão uma mensagem avisando ao usuário
      */
-    public boolean isConnected(View v){
+    public boolean isConnected(View v) {
         Context c = activity.getApplicationContext();
 
         ConnectivityManager connMgr = (ConnectivityManager) c.getSystemService(activity.CONNECTIVITY_SERVICE);
@@ -79,27 +85,10 @@ public class LoginController implements View.OnClickListener {
         if (networkInfo != null && networkInfo.isConnected()) {
             return true;
         } else {
-            Toast toast =  Toast.makeText(activity, "Você não está conectado!", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(activity, "Você não está conectado!", Toast.LENGTH_LONG);
             toast.show();
 
             return false;
-        }
-    }
-
-    /***
-     *      Método para realizar a autenticação na aplicação. O método faz as verificações básicas
-     * para ser possível acessar a activity seguinte, após autenticação.
-     *
-     * @param v - View que será usada para saber qual é o contexto para exibir o Toast
-     */
-    private void logar(View v) {
-        String login = etLogin.getText().toString();
-        String senha = etPassword.getText().toString();
-
-        if (login.isEmpty() || senha.isEmpty()) {
-            Toast.makeText(v.getContext(), "Existem campos em branco!", Toast.LENGTH_LONG).show();
-        } else {
-            new ConnectionAsync(v, "POST", login + "/" + senha).execute("http://192.168.180.135:3000/users/");
         }
     }
 }

@@ -1,9 +1,8 @@
 package androidapp.gabrielrunescape.com.br.view;
 
+import android.widget.*;
 import android.os.Bundle;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
 import androidapp.gabrielrunescape.com.br.R;
 import android.support.v7.app.AppCompatActivity;
 import androidapp.gabrielrunescape.com.br.controller.LoginController;
@@ -33,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegister);
 
-        logincontroller = new LoginController(btnLogin, btnLinkToRegister, etLogin, etPassword);
+        logincontroller = new LoginController(btnLogin, btnLinkToRegister, etLogin, etPassword, this);
 
         btnLogin.setOnClickListener(logincontroller);
         btnLinkToRegister.setOnClickListener(logincontroller);
