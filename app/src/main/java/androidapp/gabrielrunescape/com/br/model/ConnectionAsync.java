@@ -1,9 +1,13 @@
 package androidapp.gabrielrunescape.com.br.model;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 20/10/16.
@@ -22,6 +26,7 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
     private String params;
     private String method;
     private JSONArray array;
+    private Context context;
 
     /**
      *      Método contrutor para incicializar a classe assincrona. Devem ser passados os paramêtros
@@ -30,27 +35,32 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
      * @param method - Protocolo de transfêrencia para solicitação
      * @param params - Valores passados pela query
      */
-    public ConnectionAsync(String method, String params) {
+    public ConnectionAsync(View v, String method, String params) {
         this.method = method;
         this.params = params;
+        this.context = v.getContext();
     }
 
     @Override
     protected String doInBackground(String... url) {
-        try {
-            String _return = Connection.request(method, params);
-            array = new JSONArray(_return);
+        String _return = Connection.request(method, params);
 
-            return _return;
-        } catch (JSONException e) {
-            e.printStackTrace();
-
-            return e.getMessage();
-        }
+        return _return;
     }
 
     @Override
     protected void onPostExecute(String result) {
+        try {
+            JSONObject object = new JSONObject(result);
+            String msg = object.getString("response");
+            
+            if (!msg.isEmpty() || !msg.equals(null)) {
+                Toast.makeText(context, object.getString("response"), Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         System.out.println(result);
     }
 }

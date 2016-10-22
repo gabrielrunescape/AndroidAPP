@@ -54,7 +54,7 @@ public class LoginController implements View.OnClickListener {
             if (v.getId() == btnLogin.getId()) {
                 this.logar(v);
             } else {
-                new ConnectionAsync("GET", "").execute("http://192.168.180.135:3000/users");
+                new ConnectionAsync(v, "GET", "").execute("http://192.168.180.135:3000/users");
             }
         }
     }
@@ -95,7 +95,7 @@ public class LoginController implements View.OnClickListener {
         if (login.isEmpty() || senha.isEmpty()) {
             Toast.makeText(v.getContext(), "Existem campos em branco!", Toast.LENGTH_LONG).show();
         } else {
-            new ConnectionAsync("GET", login + "/" + senha).execute("http://192.168.180.135:3000/users/");
+            new ConnectionAsync(v, "POST", login + "/" + senha).execute("http://192.168.180.135:3000/users/");
         }
     }
 }

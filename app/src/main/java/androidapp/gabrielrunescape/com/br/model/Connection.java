@@ -1,5 +1,6 @@
 package androidapp.gabrielrunescape.com.br.model;
 
+import java.io.DataOutputStream;
 import java.net.URL;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +31,7 @@ public class Connection {
                 _return = get(params);
                 break;
             case "POST":
-                post();
+                _return = post(params);
                 break;
             case "PUT":
                 put();
@@ -91,8 +92,50 @@ public class Connection {
         return response.toString();
     }
 
-    private static void post() {
+    private static String post(String params) {
+        URL url;
+        StringBuffer response = null;
+        HttpURLConnection connection = null;
 
+        try {
+            url = new URL(LINK + params);
+            connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("POST");
+
+            connection.setRequestProperty("Content-Length", Integer.toString(params.getBytes().length));
+            connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+            connection.setRequestProperty("Content-Lenguage", "pt-BR");
+            connection.setRequestProperty("Accept-Charset", "UTF-8");
+
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            DataOutputStream data = new DataOutputStream(connection.getOutputStream());
+            data.writeBytes(params);
+            data.flush();
+            data.close();
+
+            InputStream in = connection.getInputStream();
+            BufferedReader input = new BufferedReader(new InputStreamReader(in));
+
+            String inputLine;
+            response = new StringBuffer();
+
+            while ((inputLine = input.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            input.close();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response.toString();
     }
 
     private static void put() {
