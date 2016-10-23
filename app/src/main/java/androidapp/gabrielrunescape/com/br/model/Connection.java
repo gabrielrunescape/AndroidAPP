@@ -1,17 +1,8 @@
 package androidapp.gabrielrunescape.com.br.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.DataOutputStream;
-import java.net.URL;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
+import java.io.*;
+import java.net.*;
+import org.json.*;
 
 /**
  *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 19/10/2016.
@@ -168,8 +159,9 @@ public class Connection {
             json.put("email", usr.getEmail());
             json.put("senha", usr.getSenha());
 
-            DataOutputStream data = new DataOutputStream(connection.getOutputStream());
-            data.writeBytes(json.toString());
+            OutputStream os = connection.getOutputStream();
+            BufferedWriter data = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            data.write(json.toString());
             data.flush();
             data.close();
 

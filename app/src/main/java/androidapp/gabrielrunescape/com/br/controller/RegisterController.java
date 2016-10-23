@@ -1,14 +1,11 @@
 package androidapp.gabrielrunescape.com.br.controller;
 
+import android.app.*;
 import android.net.*;
 import android.widget.*;
 import android.content.*;
 import android.view.View;
-import android.app.Activity;
-
-import androidapp.gabrielrunescape.com.br.model.Connection;
-import androidapp.gabrielrunescape.com.br.model.ConnectionAsync;
-import androidapp.gabrielrunescape.com.br.model.Usuario;
+import androidapp.gabrielrunescape.com.br.model.*;
 import androidapp.gabrielrunescape.com.br.view.LoginActivity;
 
 /**
@@ -75,12 +72,24 @@ public class RegisterController implements View.OnClickListener {
                     if (e3.equals(e4)) {
                         Usuario u = new Usuario(e1, e2, e3);
 
-                        new ConnectionAsync(v, "POST", u).execute("http://192.168.180.135:3000/users/");
+                        new ConnectionAsync(activity, "POST", u).execute("http://192.168.180.135:3000/users/");
 
-                        etLogin.setText(null);
-                        etEmail.setText(null);
-                        etPassword.setText(null);
-                        etPassConf.setText(null);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                        builder.setTitle("Atenção");
+                        builder.setMessage("Você deve logar para poder continuar!");
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+                                Intent intent = new Intent(activity, LoginActivity.class);
+                                activity.startActivity(intent);
+                                activity.finish();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
                     } else {
                         Toast.makeText(activity, "Senhas não confere!", Toast.LENGTH_SHORT).show();
                     }

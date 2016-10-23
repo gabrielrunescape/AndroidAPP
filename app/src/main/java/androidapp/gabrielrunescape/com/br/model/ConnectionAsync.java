@@ -1,11 +1,12 @@
 package androidapp.gabrielrunescape.com.br.model;
 
-import android.view.View;
+import android.app.*;
 import org.json.JSONObject;
 import android.widget.Toast;
 import android.os.AsyncTask;
+import android.content.Intent;
 import org.json.JSONException;
-import android.content.Context;
+import androidapp.gabrielrunescape.com.br.view.LoginActivity;
 
 /**
  *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 20/10/16.
@@ -24,25 +25,34 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
     private String params;
     private String method;
     private Usuario usuario;
-    private Context context;
+    private Activity activity;
 
     /**
      *      Método contrutor para incicializar a classe assincrona. Devem ser passados os paramêtros
      * para passar os valores para as variáveis encapsuladas para realizar as demais funções.
      *
+     * @param a - Activity em execução
      * @param method - Protocolo de transfêrencia para solicitação
      * @param params - Valores passados pela query
      */
-    public ConnectionAsync(View v, String method, String params) {
+    public ConnectionAsync(Activity a, String method, String params) {
         this.method = method;
         this.params = params;
-        this.context = v.getContext();
+        this.activity = a;
     }
 
-    public ConnectionAsync(View v, String method, Usuario usr) {
+    /**
+     *      Método contrutor para incicializar a classe assincrona. Devem ser passados os paramêtros
+     * para passar os valores para as variáveis encapsuladas para realizar as demais funções.
+     *
+     * @param a - Activity em execução
+     * @param method - Protocolo de transfêrencia para solicitação
+     * @param usr - Valores passados pela query
+     */
+    public ConnectionAsync(Activity a, String method, Usuario usr) {
+        this.activity = a;
         this.usuario = usr;
         this.method = method;
-        this.context = v.getContext();
     }
 
     @Override
@@ -61,15 +71,17 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
                 String msg = object.getString("response");
 
                 if (!msg.isEmpty() || !msg.equals(null)) {
-                    Toast.makeText(context, object.getString("response"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, object.getString("response"), Toast.LENGTH_SHORT).show();
                 }
             } else {
-                String id = object.getString("_id");
-                String login = object.getString("login");
-                String senha = object.getString("senha");
-                String email = object.getString("email");
+                if (method.equals("POST")) {
+                    String id = object.getString("_id");
+                    String login = object.getString("login");
+                    String senha = object.getString("senha");
+                    String email = object.getString("email");
 
-                Usuario usuario = new Usuario(id, login, senha, email);
+                    Usuario usuario = new Usuario(id, login, senha, email);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
