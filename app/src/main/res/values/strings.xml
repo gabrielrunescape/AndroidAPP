@@ -11,4 +11,8 @@
     <string name="etEmail">E-mail</string>
     <string name="etPassConf">Confirme sua senha</string>
     <string name="btn_register">Registar-se</string>
+
+    <!-- activity_main.xml -->
+    <string name="tvWelcome">Bem-vindo</string>
+    <string name="btn_logout">LOGOUT</string>
 </resources>
