@@ -28,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        etLogin = (EditText) findViewById(R.id.etLogin);
+        etLogin = (EditText) findViewById(R.id.txtLogin);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etPassConf = (EditText) findViewById(R.id.etPasswConf);

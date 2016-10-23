@@ -23,6 +23,7 @@ import android.content.Context;
 public class ConnectionAsync extends AsyncTask<String, Void, String> {
     private String params;
     private String method;
+    private Usuario usuario;
     private Context context;
 
     /**
@@ -38,9 +39,15 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
         this.context = v.getContext();
     }
 
+    public ConnectionAsync(View v, String method, Usuario usr) {
+        this.usuario = usr;
+        this.method = method;
+        this.context = v.getContext();
+    }
+
     @Override
     protected String doInBackground(String... url) {
-        String _return = Connection.request(method, params);
+        String _return = Connection.request(method, params, usuario);
 
         return _return;
     }

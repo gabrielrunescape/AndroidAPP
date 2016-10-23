@@ -1,5 +1,8 @@
 package androidapp.gabrielrunescape.com.br.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.DataOutputStream;
 import java.net.URL;
 import java.io.IOException;
@@ -23,7 +26,7 @@ import java.net.ProtocolException;
 public class Connection {
     private static String LINK = "http://192.168.180.135:3000/users/";
 
-    public static String request(String method, String params) {
+    public static String request(String method, String params, Usuario usr) {
         String _return = null;
 
         switch (method) {
@@ -31,7 +34,11 @@ public class Connection {
                 _return = get(params);
                 break;
             case "POST":
-                _return = post(params);
+                if (usr.equals(null)) {
+                    _return = post(params);
+                } else {
+                    _return = post(usr);
+                }
                 break;
             case "PUT":
                 put();
@@ -132,6 +139,58 @@ public class Connection {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response.toString();
+    }
+
+    private static String post(Usuario usr) {
+        URL url;
+        StringBuffer response = null;
+        HttpURLConnection connection = null;
+
+        try {
+            url = new URL(LINK);
+            connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("POST");
+
+            connection.setRequestProperty("Content-type", "application/json");
+            connection.setRequestProperty("Content-Lenguage", "pt-BR");
+            connection.setRequestProperty("Accept-Charset", "UTF-8");
+
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            JSONObject json = new JSONObject();
+            json.put("login", usr.getLogin());
+            json.put("email", usr.getEmail());
+            json.put("senha", usr.getSenha());
+
+            DataOutputStream data = new DataOutputStream(connection.getOutputStream());
+            data.writeBytes(json.toString());
+            data.flush();
+            data.close();
+
+            InputStream in = connection.getInputStream();
+            BufferedReader input = new BufferedReader(new InputStreamReader(in));
+
+            String inputLine;
+            response = new StringBuffer();
+
+            while ((inputLine = input.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            input.close();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 

@@ -5,6 +5,10 @@ import android.widget.*;
 import android.content.*;
 import android.view.View;
 import android.app.Activity;
+
+import androidapp.gabrielrunescape.com.br.model.Connection;
+import androidapp.gabrielrunescape.com.br.model.ConnectionAsync;
+import androidapp.gabrielrunescape.com.br.model.Usuario;
 import androidapp.gabrielrunescape.com.br.view.LoginActivity;
 
 /**
@@ -60,7 +64,27 @@ public class RegisterController implements View.OnClickListener {
 
         if (isConnected(v)) {
             if (v.getId() == btnRegister.getId()) {
+                String e1 = etLogin.getText().toString();
+                String e2 = etEmail.getText().toString();
+                String e3 = etPassword.getText().toString();
+                String e4 = etPassConf.getText().toString();
 
+                if (e1.isEmpty() || e2.isEmpty() || e3.isEmpty() || e4.isEmpty()) {
+                    Toast.makeText(activity, "Existem campos em branco!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (e3.equals(e4)) {
+                        Usuario u = new Usuario(e1, e2, e3);
+
+                        new ConnectionAsync(v, "POST", u).execute("http://192.168.180.135:3000/users/");
+
+                        etLogin.setText(null);
+                        etEmail.setText(null);
+                        etPassword.setText(null);
+                        etPassConf.setText(null);
+                    } else {
+                        Toast.makeText(activity, "Senhas não confere!", Toast.LENGTH_SHORT).show();
+                    }
+                }
             } else {
                 Intent intent = new Intent(activity, LoginActivity.class);
 
