@@ -39,3 +39,7 @@ $ git push origin master
 ```
 
 Prontinho, agora só esperar com que as mudanças sejam aprovadas.
+
+## Observações
+
+Caso queira acompanhar o andamento das rotinas de desenvolvimento e tarefas do projeto, foi feito o [_kamban_] (https://github.com/gabrielrunescape/AndroidAPP/projects/1) com gerenciador de tarefas para melhor organização das mesmas. Você pode ir em _Projects_ -> **AndroidAPP - Kamban** ou clicar [neste link] (https://github.com/gabrielrunescape/AndroidAPP/projects/1).
