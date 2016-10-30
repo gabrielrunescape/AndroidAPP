@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.content.Intent;
 import org.json.JSONException;
 import androidapp.gabrielrunescape.com.br.view.LoginActivity;
+import androidapp.gabrielrunescape.com.br.view.MainActivity;
 
 /**
  *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 20/10/16.
@@ -69,14 +70,21 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
 
             if (object.has("usuario")) {
                 if (method.equals("POST")) {
-                    int id = object.getInt("id");
-                    String nome = object.getString("Nome");
-                    String sexo = object.getString("Sexo");
-                    String email = object.getString("Email");
-                    String login = object.getString("Login");
-                    String senha = object.getString("Senha");
+                    int id = object.getJSONObject("usuario").getInt("ID");
+                    String nome = object.getJSONObject("usuario").getString("Nome");
+                    String sexo = object.getJSONObject("usuario").getString("Sexo");
+                    String email = object.getJSONObject("usuario").getString("Email");
+                    String login = object.getJSONObject("usuario").getString("Login");
+                    String senha = object.getJSONObject("usuario").getString("Senha");
 
                     Usuario usuario = new Usuario(id, email, login, nome, senha, sexo);
+
+                    Intent main = new Intent(activity, MainActivity.class);
+                    main.putExtra("lbl_name", nome);
+                    main.putExtra("lbl_mail", email);
+
+                    activity.startActivity(main);
+                    activity.finish();
                 }
             } else {
                 String msg = object.getString("message");

@@ -44,7 +44,8 @@ public class MainController implements View.OnClickListener {
      * @param txt1 - TextView para exibição do login
      * @param txt2 - TextView para exibição do e-mail
      */
-    public MainController(Button b1, TextView txt1, TextView txt2) {
+    public MainController(Activity a , Button b1, TextView txt1, TextView txt2) {
+        this.activity = a;
         this.btnLogout = b1;
         this.tvLogin = txt1;
         this.tvEmail = txt2;
