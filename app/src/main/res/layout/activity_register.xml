@@ -19,6 +19,19 @@
         android:paddingRight="20dp" >
 
         <EditText
+            android:id="@+id/etName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:hint="@string/etName"
+            android:padding="10dp"
+            android:maxLines="1"
+            android:inputType="textCapWords"
+            android:textColor="@color/input_login"
+            android:textColorHint="@color/input_register_hint" />
+
+        <EditText
             android:id="@+id/txtLogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -69,6 +82,30 @@
             android:maxLines="1"
             android:textColor="@color/input_login"
             android:textColorHint="@color/input_register_hint" />
+
+        <RadioGroup
+            android:id="@+id/rgRegister"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rbMale"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:buttonTint="@color/btn_login_bg"
+                android:textColor="@color/white"
+                android:hint="@string/rbMale"/>
+
+            <RadioButton
+                android:id="@+id/rbFemale"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:buttonTint="@color/btn_login_bg"
+                android:textColor="@color/white"
+                android:hint="@string/rbFemale"/>
+        </RadioGroup>
 
         <!-- Login Button -->
 

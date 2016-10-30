@@ -19,13 +19,27 @@ import androidapp.gabrielrunescape.com.br.view.LoginActivity;
  */
 
 public class RegisterController implements View.OnClickListener {
+    private EditText etName;
     private EditText etLogin;
     private EditText etEmail;
     private Activity activity;
+    private RadioButton rbMale;
     private Button btnRegister;
     private EditText etPassword;
     private EditText etPassConf;
+    private RadioButton rbFemale;
+    private RadioGroup rgRegister;
     private Button btnLinkToLogin;
+
+    /**
+     *      Método construtor do controlador. Todos os valores devem ser passados já instanciados
+     * através dos métodos acessores (GET e SET).
+     *
+     * @param a - Activity de execução
+     */
+    public RegisterController(Activity a) {
+        this.activity = a;
+    }
 
     /**
      *      Método construtor do controlador. Devem ser passadas as valores já instânciadas e
@@ -61,38 +75,49 @@ public class RegisterController implements View.OnClickListener {
 
         if (isConnected(v)) {
             if (v.getId() == btnRegister.getId()) {
-                String e1 = etLogin.getText().toString();
-                String e2 = etEmail.getText().toString();
-                String e3 = etPassword.getText().toString();
-                String e4 = etPassConf.getText().toString();
+                String e1 = etName.getText().toString().trim();
+                String e2 = etLogin.getText().toString().trim();
+                String e3 = etEmail.getText().toString().trim();
+                String e4 = etPassword.getText().toString().trim();
+                String e5 = etPassConf.getText().toString().trim();
 
-                if (e1.isEmpty() || e2.isEmpty() || e3.isEmpty() || e4.isEmpty()) {
-                    Toast.makeText(activity, "Existem campos em branco!", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (e3.equals(e4)) {
-                        Usuario u = new Usuario(e1, e2, e3);
-
-                        new ConnectionAsync(activity, "POST", u).execute("http://192.168.180.135:3000/users/");
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                        builder.setTitle("Atenção");
-                        builder.setMessage("Você deve logar para poder continuar!");
-                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-
-                                Intent intent = new Intent(activity, LoginActivity.class);
-                                activity.startActivity(intent);
-                                activity.finish();
-                            }
-                        });
-
-                        AlertDialog alert = builder.create();
-                        alert.show();
+                if (rbMale.isChecked() || rbFemale.isChecked()) {
+                    if (e1.isEmpty() || e2.isEmpty() || e3.isEmpty() || e4.isEmpty() || e5.isEmpty()) {
+                        Toast.makeText(activity, "Existem campos em branco!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(activity, "Senhas não confere!", Toast.LENGTH_SHORT).show();
+                        if (e4.equals(e5)) {
+                            String genre = "M";
+
+                            if (rbFemale.isChecked()) {
+                                genre = "F";
+                            }
+
+                            Usuario u = new Usuario(e1, e2, e3, genre, e4);
+
+                            new ConnectionAsync(activity, "POST", u).execute("http://192.168.180.135:3000/users/");
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                            builder.setTitle("Atenção");
+                            builder.setMessage("Você deve logar para poder continuar!");
+                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+
+                                    Intent intent = new Intent(activity, LoginActivity.class);
+                                    activity.startActivity(intent);
+                                    activity.finish();
+                                }
+                            });
+
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        } else {
+                            Toast.makeText(activity, "Senhas não confere!", Toast.LENGTH_SHORT).show();
+                        }
                     }
+                } else {
+                    Toast.makeText(activity, "Selecione o sexo!", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Intent intent = new Intent(activity, LoginActivity.class);
@@ -123,5 +148,85 @@ public class RegisterController implements View.OnClickListener {
 
             return false;
         }
+    }
+
+    public Button getBtnLinkToLogin() {
+        return btnLinkToLogin;
+    }
+
+    public void setBtnLinkToLogin(Button btnLinkToLogin) {
+        this.btnLinkToLogin = btnLinkToLogin;
+    }
+
+    public Button getBtnRegister() {
+        return btnRegister;
+    }
+
+    public void setBtnRegister(Button btnRegister) {
+        this.btnRegister = btnRegister;
+    }
+
+    public EditText getEtEmail() {
+        return etEmail;
+    }
+
+    public void setEtEmail(EditText etEmail) {
+        this.etEmail = etEmail;
+    }
+
+    public EditText getEtLogin() {
+        return etLogin;
+    }
+
+    public void setEtLogin(EditText etLogin) {
+        this.etLogin = etLogin;
+    }
+
+    public EditText getEtPassConf() {
+        return etPassConf;
+    }
+
+    public void setEtPassConf(EditText etPassConf) {
+        this.etPassConf = etPassConf;
+    }
+
+    public EditText getEtPassword() {
+        return etPassword;
+    }
+
+    public void setEtPassword(EditText etPassword) {
+        this.etPassword = etPassword;
+    }
+
+    public RadioButton getRbFemale() {
+        return rbFemale;
+    }
+
+    public void setRbFemale(RadioButton rbFemale) {
+        this.rbFemale = rbFemale;
+    }
+
+    public RadioButton getRbMale() {
+        return rbMale;
+    }
+
+    public void setRbMale(RadioButton rbMale) {
+        this.rbMale = rbMale;
+    }
+
+    public RadioGroup getRgRegister() {
+        return rgRegister;
+    }
+
+    public void setRgRegister(RadioGroup rgRegister) {
+        this.rgRegister = rgRegister;
+    }
+
+    public EditText getEtName() {
+        return etName;
+    }
+
+    public void setEtName(EditText etName) {
+        this.etName = etName;
     }
 }

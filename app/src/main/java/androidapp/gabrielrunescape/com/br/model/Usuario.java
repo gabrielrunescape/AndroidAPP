@@ -8,6 +8,8 @@ package androidapp.gabrielrunescape.com.br.model;
 
 public class Usuario {
     private String _id;
+    private String nome;
+    private String sexo;
     private String login;
     private String senha;
     private String email;
@@ -25,12 +27,28 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Usuario(String nome, String login, String email, String sexo, String senha) {
+        this.nome = nome;
+        this.sexo = sexo;
+        this.email = email;
+        this.login = login;
+        this.senha = senha;
+    }
+
     public String getID() {
         return _id;
     }
 
     public void setID(String id) {
         this._id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getLogin() {
@@ -55,5 +73,13 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 }

@@ -155,6 +155,8 @@ public class Connection {
             connection.setDoOutput(true);
 
             JSONObject json = new JSONObject();
+            json.put("nome", usr.getNome());
+            json.put("sexo", usr.getSexo());
             json.put("login", usr.getLogin());
             json.put("email", usr.getEmail());
             json.put("senha", usr.getSenha());
