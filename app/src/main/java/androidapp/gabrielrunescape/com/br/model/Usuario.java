@@ -7,26 +7,37 @@ package androidapp.gabrielrunescape.com.br.model;
  */
 
 public class Usuario {
-    private String _id;
+    private int _id;
     private String nome;
     private String sexo;
     private String login;
     private String senha;
     private String email;
 
-    public Usuario(String login, String email, String senha) {
-        this.email = email;
-        this.login = login;
-        this.senha = senha;
-    }
-
-    public Usuario(String id, String email, String login, String senha) {
+    /**
+     *      Método construtor para o objeto Usuario. Cria um Usuario copiando alguns para o objeto.
+     *
+     * @param id - Código identificador do usuário
+     * @param email - E-mail do usuário
+     * @param login - Nome de usuário
+     * @param senha - Senha com hash do usuário
+     */
+    public Usuario(int id, String email, String login, String senha) {
         this._id = id;
         this.email = email;
         this.login = login;
         this.senha = senha;
     }
 
+    /**
+     *      Método construtor para o objeto Usuario. Cria um novo Usuario sem um ID.
+     *
+     * @param nome - Nome do usuário
+     * @param login - Nome de usuário
+     * @param email - E-mail do usuário
+     * @param sexo - Sexo do usuário
+     * @param senha - Senha com hash do usuário
+     */
     public Usuario(String nome, String login, String email, String sexo, String senha) {
         this.nome = nome;
         this.sexo = sexo;
@@ -35,11 +46,30 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getID() {
+    /**
+     *      Método construtor para um objeto Usuario. Cria um novo Usuário com todas as informações.
+     *
+     * @param id - Código identificador do usuário
+     * @param email - E-mail do usuário
+     * @param login - Nome de usuário
+     * @param nome - Nome do usuário
+     * @param senha - Senha com hash do usuário
+     * @param sexo - Sexo do usuário
+     */
+    public Usuario(int id, String email, String login, String nome, String senha, String sexo) {
+        this._id = id;
+        this.email = email;
+        this.login = login;
+        this.nome = nome;
+        this.senha = senha;
+        this.sexo = sexo;
+    }
+
+    public int getID() {
         return _id;
     }
 
-    public void setID(String id) {
+    public void setID(int id) {
         this._id = id;
     }
 

@@ -94,7 +94,7 @@ public class RegisterController implements View.OnClickListener {
 
                             Usuario u = new Usuario(e1, e2, e3, genre, e4);
 
-                            new ConnectionAsync(activity, "POST", u).execute("http://192.168.180.135:3000/users/");
+                            new ConnectionAsync(activity, "POST", u).execute("http://192.168.180.135:3000/usuarios/");
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                             builder.setTitle("Atenção");

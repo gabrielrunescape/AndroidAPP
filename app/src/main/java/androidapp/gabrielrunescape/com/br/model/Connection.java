@@ -15,7 +15,7 @@ import org.json.*;
  */
 
 public class Connection {
-    private static String LINK = "http://192.168.180.135:3000/users/";
+    private static String LINK = "http://192.168.180.135:3000/usuarios/";
 
     public static String request(String method, String params, Usuario usr) {
         String _return = null;
@@ -25,7 +25,7 @@ public class Connection {
                 _return = get(params);
                 break;
             case "POST":
-                if (usr.equals(null)) {
+                if (usr == null) {
                     _return = post(params);
                 } else {
                     _return = post(usr);
@@ -60,7 +60,7 @@ public class Connection {
             url = new URL(LINK + params);
             connection = (HttpURLConnection) url.openConnection();
 
-            connection.setRequestMethod("GET");
+            connection.setRequestMethod("POST");
 
             connection.setRequestProperty("Content-type", "application/json");
             connection.setRequestProperty("Content-Lenguage", "pt-BR");

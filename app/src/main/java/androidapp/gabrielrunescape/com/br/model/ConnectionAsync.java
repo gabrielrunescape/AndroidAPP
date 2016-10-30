@@ -24,8 +24,8 @@ import androidapp.gabrielrunescape.com.br.view.LoginActivity;
 public class ConnectionAsync extends AsyncTask<String, Void, String> {
     private String params;
     private String method;
-    private Usuario usuario;
     private Activity activity;
+    private Usuario usuario = null;
 
     /**
      *      Método contrutor para incicializar a classe assincrona. Devem ser passados os paramêtros
@@ -67,21 +67,20 @@ public class ConnectionAsync extends AsyncTask<String, Void, String> {
         try {
             JSONObject object = new JSONObject(result);
 
-            if (object.has("response")) {
-                String msg = object.getString("response");
+            if (object.has("usuario")) {
+                if (method.equals("POST")) {
+                    int id = object.getInt("id");
+                    String nome = object.getString("Nome");
+                    String sexo = object.getString("Sexo");
+                    String email = object.getString("Email");
+                    String login = object.getString("Login");
+                    String senha = object.getString("Senha");
 
-                if (!msg.isEmpty() || !msg.equals(null)) {
-                    Toast.makeText(activity, object.getString("response"), Toast.LENGTH_SHORT).show();
+                    Usuario usuario = new Usuario(id, email, login, nome, senha, sexo);
                 }
             } else {
-                if (method.equals("POST")) {
-                    String id = object.getString("_id");
-                    String login = object.getString("login");
-                    String senha = object.getString("senha");
-                    String email = object.getString("email");
-
-                    Usuario usuario = new Usuario(id, login, senha, email);
-                }
+                String msg = object.getString("message");
+                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
