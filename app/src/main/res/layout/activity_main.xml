@@ -2,53 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:stretchMode="columnWidth"
     android:gravity="center"
     tools:context="androidapp.gabrielrunescape.com.br.view.MainActivity">
 
-    <LinearLayout
+    <GridView
+        android:id="@+id/mainGridView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_gravity="center"
-        android:orientation="vertical"
-        tools:ignore="UselessParent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/tvWelcome"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/lbl_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:textColor="@color/lbl_name"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/lbl_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="13sp" />
-
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
-            android:background="@color/btn_logut_bg"
-            android:text="@string/btn_logout"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-    </LinearLayout>
+        android:layout_height="fill_parent"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:numColumns="@integer/grid_rows" />
 </LinearLayout>
