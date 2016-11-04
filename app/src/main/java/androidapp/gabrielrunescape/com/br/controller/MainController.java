@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import androidapp.gabrielrunescape.com.br.model.Usuario;
 import androidapp.gabrielrunescape.com.br.view.LoginActivity;
+import androidapp.gabrielrunescape.com.br.view.MainActivity;
 
 /**
  *      Criado por GabrielRuneScape <gabrielfilipe@mail.ru> em 22/10/2016.
@@ -17,47 +18,47 @@ import androidapp.gabrielrunescape.com.br.view.LoginActivity;
  * aplicação.
  */
 
-public class MainController implements View.OnClickListener {
-    private Usuario usuario;
-    private Button btnLogout;
-    private TextView tvLogin;
-    private TextView tvEmail;
+public class MainController implements AdapterView.OnItemClickListener {
     private Activity activity;
+    private GridView gridview;
 
     /**
      *      Método construtor do controlador. Deve ser passado o valor já instânciado e iniciado
      * para que todas as funções subsequentes sejam executadas sem problemas.
      *
-     * @param usuario - Objeto de usuário
-     * @param a - Activity de execução
+     * @param a Activity de execução.
+     * @param g GridView com os itens já instânciados.
      */
-    public MainController(Usuario usuario, Activity a) {
+    public MainController(Activity a, GridView g) {
         this.activity = a;
-        this.usuario = usuario;
+        this.gridview = g;
     }
 
     /**
-     *      Método construtor do controlador. Devem ser passados os valores já instânciados e
-     * iniciados para que todas as funções subsequentes sejam executadas sem problemas.
+     *      Método `callback` para realizar a ação de um item do AdapterView quando clicado. Quando
+     * determinada posição é clicada é realizada uma ação.
      *
-     * @param b1 - Botão para realizar logout
-     * @param txt1 - TextView para exibição do login
-     * @param txt2 - TextView para exibição do e-mail
-     */
-    public MainController(Activity a , Button b1, TextView txt1, TextView txt2) {
-        this.activity = a;
-        this.btnLogout = b1;
-        this.tvLogin = txt1;
-        this.tvEmail = txt2;
-    }
-
-    /***
-     *      Método sobrescrito para poder realizar as ações de `ClickListener`.
-     *
-     * @param v - Não necessário quando se chama o procedimento 'setOnClickListener'
+     * @param parent   O AdapterView quando o clique é feito.
+     * @param view     A view na qual foi clicada.
+     * @param position A posição da view no adaptador.
+     * @param id       A linha do item que foi clicado.
      */
     @Override
-    public void onClick(View v) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 5: // Logout
+                logout();
+                break;
+            default:
+                Toast.makeText(activity, "Botão: " + position, Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    /**
+     *      Método para se desconectar da seção ativa e regressar a tela de autenticação.
+     */
+    private void logout() {
         Intent intent = new Intent(activity, LoginActivity.class);
 
         activity.startActivity(intent);

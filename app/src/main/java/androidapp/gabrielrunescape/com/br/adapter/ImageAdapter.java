@@ -18,20 +18,18 @@ import androidapp.gabrielrunescape.com.br.R;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-    List<Choose> itens = new ArrayList<>();
+    private List<Choose> itens = new ArrayList<>();
 
     public ImageAdapter(Context c) {
         mContext = c;
+        String[] s = c.getResources().getStringArray(R.array.sample_main);
 
-        itens.add(new Choose(R.drawable.sample_2, "Delire"));
-        itens.add(new Choose(R.drawable.sample_3, "Dans mon"));
-        itens.add(new Choose(R.drawable.sample_4, "Option"));
-        itens.add(new Choose(R.drawable.sample_5, "Deconnectés"));
-        itens.add(new Choose(R.drawable.sample_6, "DJ Snakey"));
-        itens.add(new Choose(R.drawable.sample_7, "Android Visual"));
-        itens.add(new Choose(R.drawable.sample_8, "Y no que más na"));
-        itens.add(new Choose(R.drawable.sample_1, "Cactesas"));
-        itens.add(new Choose(R.drawable.sample_3, "Delire"));
+        itens.add(new Choose(R.drawable.sample_1, s[0]));
+        itens.add(new Choose(R.drawable.sample_2, s[1]));
+        itens.add(new Choose(R.drawable.sample_3, s[2]));
+        itens.add(new Choose(R.drawable.sample_4, s[3]));
+        itens.add(new Choose(R.drawable.sample_5, s[4]));
+        itens.add(new Choose(R.drawable.sample_6, s[5]));
     }
 
     public int getCount() {
@@ -63,7 +61,6 @@ public class ImageAdapter extends BaseAdapter {
 
         return convertView;
     }
-
 }
 
 class Choose {

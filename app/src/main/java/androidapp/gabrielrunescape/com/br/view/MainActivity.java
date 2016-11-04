@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.*;
 import androidapp.gabrielrunescape.com.br.R;
 import androidapp.gabrielrunescape.com.br.adapter.ImageAdapter;
+import androidapp.gabrielrunescape.com.br.controller.MainController;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -23,12 +24,6 @@ public class MainActivity extends AppCompatActivity {
         GridView gridview = (GridView) findViewById(R.id.mainGridView);
         gridview.setAdapter(new ImageAdapter(this));
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position, Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        gridview.setOnItemClickListener(new MainController(this, gridview));
     }
 }
