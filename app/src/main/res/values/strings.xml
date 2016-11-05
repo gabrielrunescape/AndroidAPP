@@ -28,4 +28,14 @@
         <item>Preferências</item>
         <item>Logout</item>
     </string-array>
+
+    <!-- UsuarioAsync.java -->
+    <string name="alertRegister">Atenção</string>
+    <string name="messageRegister">Você deve logar para poder continuar!</string>
+
+    <!-- RegisterController.java -->
+    <string name="toastConnect">Você não está conectado!</string>
+    <string name="toastNull">Existem campos em branco!</string>
+    <string name="toastNotMatch">Senhas não confere!</string>
+    <string name="toastGenre">Selecione o sexo!</string>
 </resources>

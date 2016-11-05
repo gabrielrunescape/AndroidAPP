@@ -5,6 +5,8 @@ import android.net.*;
 import android.widget.*;
 import android.content.*;
 import android.view.View;
+
+import androidapp.gabrielrunescape.com.br.R;
 import androidapp.gabrielrunescape.com.br.model.*;
 import androidapp.gabrielrunescape.com.br.view.LoginActivity;
 
@@ -83,7 +85,8 @@ public class RegisterController implements View.OnClickListener {
 
                 if (rbMale.isChecked() || rbFemale.isChecked()) {
                     if (e1.isEmpty() || e2.isEmpty() || e3.isEmpty() || e4.isEmpty() || e5.isEmpty()) {
-                        Toast.makeText(activity, "Existem campos em branco!", Toast.LENGTH_SHORT).show();
+                        String msg = activity.getResources().getString(R.string.toastNull);
+                        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                     } else {
                         if (e4.equals(e5)) {
                             String genre = "M";
@@ -94,30 +97,15 @@ public class RegisterController implements View.OnClickListener {
 
                             Usuario u = new Usuario(e1, e2, e3, genre, e4);
 
-                            new ConnectionAsync(activity, "POST", u).execute("http://192.168.180.135:3000/usuarios/");
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                            builder.setTitle("Atenção");
-                            builder.setMessage("Você deve logar para poder continuar!");
-                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-
-                                    Intent intent = new Intent(activity, LoginActivity.class);
-                                    activity.startActivity(intent);
-                                    activity.finish();
-                                }
-                            });
-
-                            AlertDialog alert = builder.create();
-                            alert.show();
+                            new UsuarioAsync(activity, "POST", u).execute("http://192.168.180.135:3000/usuarios/");
                         } else {
-                            Toast.makeText(activity, "Senhas não confere!", Toast.LENGTH_SHORT).show();
+                            String msg = activity.getResources().getString(R.string.toastNotMatch);
+                            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                         }
                     }
                 } else {
-                    Toast.makeText(activity, "Selecione o sexo!", Toast.LENGTH_SHORT).show();
+                    String msg = activity.getResources().getString(R.string.toastGenre);
+                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Intent intent = new Intent(activity, LoginActivity.class);
@@ -143,7 +131,9 @@ public class RegisterController implements View.OnClickListener {
         if (networkInfo != null && networkInfo.isConnected()) {
             return true;
         } else {
-            Toast toast = Toast.makeText(activity, "Você não está conectado!", Toast.LENGTH_LONG);
+            String msg = activity.getResources().getString(R.string.toastConnect);
+
+            Toast toast = Toast.makeText(activity, msg, Toast.LENGTH_LONG);
             toast.show();
 
             return false;

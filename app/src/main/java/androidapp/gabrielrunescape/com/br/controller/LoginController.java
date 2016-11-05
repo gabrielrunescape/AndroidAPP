@@ -5,7 +5,8 @@ import android.widget.*;
 import android.content.*;
 import android.view.View;
 import android.app.Activity;
-import androidapp.gabrielrunescape.com.br.model.ConnectionAsync;
+import androidapp.gabrielrunescape.com.br.R;
+import androidapp.gabrielrunescape.com.br.model.UsuarioAsync;
 import androidapp.gabrielrunescape.com.br.view.RegisterActivity;
 
 /**
@@ -79,8 +80,8 @@ public class LoginController implements View.OnClickListener {
         if (networkInfo != null && networkInfo.isConnected()) {
             return true;
         } else {
-            Toast toast =  Toast.makeText(activity, "Você não está conectado!", Toast.LENGTH_LONG);
-            toast.show();
+            String msg = activity.getResources().getString(R.string.toastConnect);
+            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
 
             return false;
         }
@@ -97,9 +98,10 @@ public class LoginController implements View.OnClickListener {
         String senha = etPassword.getText().toString();
 
         if (login.isEmpty() || senha.isEmpty()) {
-            Toast.makeText(v.getContext(), "Existem campos em branco!", Toast.LENGTH_LONG).show();
+            String msg = activity.getResources().getString(R.string.toastNull);
+            Toast.makeText(v.getContext(), msg, Toast.LENGTH_LONG).show();
         } else {
-            new ConnectionAsync(activity, "POST", login + "/" + senha).execute("http://192.168.180.135:3000/usuarios/");
+            new UsuarioAsync(activity, "POST", login + "/" + senha).execute("http://192.168.180.135:3000/usuarios/");
         }
     }
 }
