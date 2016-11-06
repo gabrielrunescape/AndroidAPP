@@ -7,7 +7,6 @@ import android.app.*;
 import android.content.*;
 import android.os.AsyncTask;
 import android.widget.Toast;
-import androidapp.gabrielrunescape.com.br.R;
 import androidapp.gabrielrunescape.com.br.view.*;
 
 /**
@@ -103,30 +102,13 @@ public class UsuarioAsync extends AsyncTask<String, Void, String> {
                     activity.startActivity(intent);
                     activity.finish();
                 } else {
-                    int id = object.getJSONObject("usuario").getInt("ID");
-                    String nome = object.getJSONObject("usuario").getString("Nome");
-                    String sexo = object.getJSONObject("usuario").getString("Sexo");
-                    String email = object.getJSONObject("usuario").getString("Email");
-                    String login = object.getJSONObject("usuario").getString("Login");
-                    String senha = object.getJSONObject("usuario").getString("Senha");
+                    String msg = object.getString("message") + "\nAutentique-se para continuar!";
+                    Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
 
-                    usuario = new Usuario(id, email, login, nome, senha, sexo);
+                    Intent intent = new Intent(activity, LoginActivity.class);
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-                    builder.setTitle(activity.getResources().getString(R.string.alertRegister));
-                    builder.setMessage(activity.getResources().getString(R.string.messageRegister));
-
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-
-                            Intent intent = new Intent(activity, LoginActivity.class);
-                            activity.startActivity(intent);
-                            activity.finish();
-                        }
-                    });
+                    activity.startActivity(intent);
+                    activity.finish();
                 }
             } else {
                 String msg = object.getString("message");
