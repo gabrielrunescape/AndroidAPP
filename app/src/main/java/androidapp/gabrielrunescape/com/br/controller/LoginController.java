@@ -53,37 +53,13 @@ public class LoginController implements View.OnClickListener {
     public void onClick(View v) {
         int idView = v.getId();
 
-        if (isConnected(v)) {
-            if (v.getId() == btnLogin.getId()) {
-                this.logar(v);
-            } else {
-                Intent intent = new Intent(activity, RegisterActivity.class);
-
-                activity.startActivity(intent);
-                activity.finish();
-            }
-        }
-    }
-
-    /***
-     *      Método para verificar se o dispositivo está conectado à Internet
-     *
-     * @param v - Usado para capturar o contexto no qual se basea a aplicação
-     * @return - verdadeiro se tem acesso à internet, senão uma mensagem avisando ao usuário
-     */
-    public boolean isConnected(View v){
-        Context c = activity.getApplicationContext();
-
-        ConnectivityManager connMgr = (ConnectivityManager) c.getSystemService(activity.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
+        if (v.getId() == btnLogin.getId()) {
+            this.logar(v);
         } else {
-            String msg = activity.getResources().getString(R.string.toastConnect);
-            Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(activity, RegisterActivity.class);
 
-            return false;
+            activity.startActivity(intent);
+            activity.finish();
         }
     }
 
@@ -101,7 +77,7 @@ public class LoginController implements View.OnClickListener {
             String msg = activity.getResources().getString(R.string.toastNull);
             Toast.makeText(v.getContext(), msg, Toast.LENGTH_LONG).show();
         } else {
-            new UsuarioAsync(activity, "POST", login + "/" + senha).execute("http://192.168.180.135:3000/usuarios/");
+            new UsuarioAsync(activity, "ARAB", login + "/" + senha).execute("http://192.168.180.135:3000/usuarios/");
         }
     }
 }

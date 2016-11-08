@@ -3,10 +3,14 @@ package androidapp.gabrielrunescape.com.br.model;
 import java.io.*;
 import java.net.*;
 import org.json.*;
+import android.net.*;
 import android.app.*;
 import android.content.*;
+import android.view.View;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import androidapp.gabrielrunescape.com.br.R;
 import androidapp.gabrielrunescape.com.br.view.*;
 
 /**
@@ -77,7 +81,7 @@ public class UsuarioAsync extends AsyncTask<String, Void, String> {
                 }
                 break;
             default:
-
+                isConnected();
                 break;
         }
 
@@ -92,7 +96,7 @@ public class UsuarioAsync extends AsyncTask<String, Void, String> {
      */
     @Override
     protected void onPostExecute(String result) {
-        try {
+        /*try {
             JSONObject object = new JSONObject(result);
 
             if (object.has("usuario")) {
@@ -116,7 +120,7 @@ public class UsuarioAsync extends AsyncTask<String, Void, String> {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     /**
@@ -278,5 +282,60 @@ public class UsuarioAsync extends AsyncTask<String, Void, String> {
         }
 
         return response.toString();
+    }
+
+
+
+    /***
+     *      Método para verificar se o dispositivo está conectado à Internet
+     *
+     * @return Verdadeiro se tem acesso à internet, senão uma mensagem avisando ao usuário
+     */
+    public boolean isConnected(){
+        Context c = activity.getApplicationContext();
+
+        ConnectivityManager connMgr = (ConnectivityManager) c.getSystemService(activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            boolean _return = true;
+
+            try {
+                URL url = new URL(LINK);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                connection.setRequestMethod("GET");
+
+                connection.setRequestProperty("Content-type", "application/json");
+                connection.setRequestProperty("Content-Lenguage", "pt-BR");
+                connection.setRequestProperty("Accept-Charset", "UTF-8");
+
+                System.out.println(connection.getResponseCode());
+
+                return (connection.getResponseCode() == HttpURLConnection.HTTP_OK);
+            } catch (final Exception e) {
+                System.out.println(e.getMessage());
+
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                return false;
+            }
+        } else {
+            final String msg = activity.getResources().getString(R.string.toastConnect);
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return false;
+        }
     }
 }
