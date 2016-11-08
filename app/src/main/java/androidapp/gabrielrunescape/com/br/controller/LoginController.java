@@ -1,6 +1,5 @@
 package androidapp.gabrielrunescape.com.br.controller;
 
-import android.net.*;
 import android.widget.*;
 import android.content.*;
 import android.view.View;
@@ -30,11 +29,11 @@ public class LoginController implements View.OnClickListener {
      *      Método construtor do controlador. Devem ser passadas as valores já instânciadas e
      * iniciadas para que a todas as funções subsequentes sejam executadas sem problemas.
      *
-     * @param btn1 - Botão de login
-     * @param btn2 - Botão de registro
-     * @param et1 - EditText de nome de usuário
-     * @param et2 - EditText de senha
-     * @param a - Activity de execução
+     * @param btn1 Botão de login
+     * @param btn2 Botão de registro
+     * @param et1  EditText de nome de usuário
+     * @param et2  EditText de senha
+     * @param a    Activity de execução
      */
     public LoginController(Button btn1, Button btn2, EditText et1, EditText et2, Activity a) {
         this.activity = a;
@@ -47,12 +46,10 @@ public class LoginController implements View.OnClickListener {
     /***
      *      Método sobrescrito para poder realizar as ações de `ClickListener`.
      *
-     * @param v - Não necessário quando se chama o procedimento 'setOnClickListener'
+     * @param v Não necessário quando se chama o procedimento 'setOnClickListener'
      */
     @Override
     public void onClick(View v) {
-        int idView = v.getId();
-
         if (v.getId() == btnLogin.getId()) {
             this.logar(v);
         } else {
@@ -67,7 +64,7 @@ public class LoginController implements View.OnClickListener {
      *      Método para realizar a autenticação na aplicação. O método faz as verificações básicas
      * para ser possível acessar a activity seguinte, após autenticação.
      *
-     * @param v - View que será usada para saber qual é o contexto para exibir o Toast
+     * @param v View que será usada para saber qual é o contexto para exibir o Toast
      */
     private void logar(View v) {
         String login = etLogin.getText().toString();
@@ -77,7 +74,7 @@ public class LoginController implements View.OnClickListener {
             String msg = activity.getResources().getString(R.string.toastNull);
             Toast.makeText(v.getContext(), msg, Toast.LENGTH_LONG).show();
         } else {
-            new UsuarioAsync(activity, "ARAB", login + "/" + senha).execute("http://192.168.180.135:3000/usuarios/");
+            new UsuarioAsync(activity, "POST", login + "/" + senha).execute("http://192.168.180.135:3000/usuarios/");
         }
     }
 }

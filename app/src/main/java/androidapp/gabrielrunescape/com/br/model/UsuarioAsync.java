@@ -69,20 +69,21 @@ public class UsuarioAsync extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... url) {
         String _return = "";
 
-        switch (method) {
-            case "GET":
-                _return = get(params);
-                break;
-            case "POST":
-                if (usuario == null) {
-                    _return = post(params);
-                } else {
-                    _return = post(usuario);
-                }
-                break;
-            default:
-                isConnected();
-                break;
+        if (isConnected()) {
+            switch (method) {
+                case "GET":
+                    _return = get(params);
+                    break;
+                case "POST":
+                    if (usuario == null) {
+                        _return = post(params);
+                    } else {
+                        _return = post(usuario);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         return _return;
@@ -96,31 +97,33 @@ public class UsuarioAsync extends AsyncTask<String, Void, String> {
      */
     @Override
     protected void onPostExecute(String result) {
-        /*try {
-            JSONObject object = new JSONObject(result);
+        if (!result.equals("")) {
+            try {
+                JSONObject object = new JSONObject(result);
 
-            if (object.has("usuario")) {
-                if (method.equals("POST") && usuario == null) {
-                    Intent intent = new Intent(activity, MainActivity.class);
+                if (object.has("usuario")) {
+                    if (method.equals("POST") && usuario == null) {
+                        Intent intent = new Intent(activity, MainActivity.class);
 
-                    activity.startActivity(intent);
-                    activity.finish();
+                        activity.startActivity(intent);
+                        activity.finish();
+                    } else {
+                        String msg = object.getString("message") + "\nAutentique-se para continuar!";
+                        Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
+
+                        Intent intent = new Intent(activity, LoginActivity.class);
+
+                        activity.startActivity(intent);
+                        activity.finish();
+                    }
                 } else {
-                    String msg = object.getString("message") + "\nAutentique-se para continuar!";
-                    Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
-
-                    Intent intent = new Intent(activity, LoginActivity.class);
-
-                    activity.startActivity(intent);
-                    activity.finish();
+                    String msg = object.getString("message");
+                    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
                 }
-            } else {
-                String msg = object.getString("message");
-                Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
+        }
     }
 
     /**
@@ -298,8 +301,6 @@ public class UsuarioAsync extends AsyncTask<String, Void, String> {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            boolean _return = true;
-
             try {
                 URL url = new URL(LINK);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -310,12 +311,8 @@ public class UsuarioAsync extends AsyncTask<String, Void, String> {
                 connection.setRequestProperty("Content-Lenguage", "pt-BR");
                 connection.setRequestProperty("Accept-Charset", "UTF-8");
 
-                System.out.println(connection.getResponseCode());
-
-                return (connection.getResponseCode() == HttpURLConnection.HTTP_OK);
+                return true;
             } catch (final Exception e) {
-                System.out.println(e.getMessage());
-
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
